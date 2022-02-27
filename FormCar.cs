@@ -33,15 +33,11 @@ namespace WindowsFormsCars
  private void buttonCreate_Click(object sender, EventArgs e)
         {
             Random rnd = new Random();
-            excavator = new Excavator();
-            excavator.Init(rnd.Next(100, 300),
-                           rnd.Next(1000, 2000),
-                           Color.Yellow,
-                           Color.Blue,
-                           true,
-                           true);
+            excavator = new Excavator(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Yellow);
             excavator.SetPosition(rnd.Next(10, 100),
-            rnd.Next(10, 100), pictureBoxCars.Width, pictureBoxCars.Height);
+                                  rnd.Next(10, 100), 
+                                  pictureBoxCars.Width,
+                                  pictureBoxCars.Height);
             Draw();
         }
         /// <summary>
@@ -69,6 +65,27 @@ namespace WindowsFormsCars
                     excavator.MoveTransport(Direction.Right);
                     break;
             }
+            Draw();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Random rnd = new Random();
+            excavator = new Excavator(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Yellow);
+            excavator.SetPosition(rnd.Next(10, 100),
+                                  rnd.Next(10, 100),
+                                  pictureBoxCars.Width,
+                                  pictureBoxCars.Height);
+            Draw();
+        }
+
+        private void buttonCreateCleaner_Click(object sender, EventArgs e)
+        {
+            Random rnd = new Random();
+            excavator = new CleanerVehicle(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Blue,
+           Color.Yellow, true, true);
+            excavator.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxCars.Width,
+           pictureBoxCars.Height);
             Draw();
         }
     }
