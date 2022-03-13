@@ -40,8 +40,8 @@ namespace WindowsFormsCars
         public Color MainColor { protected set; get; }
         public void SetPosition(int x, int y, int width, int height)
         {
-            _startPosX = width / 2 + x;
-            _startPosY = height / 2 + y;
+            _startPosX = x - 140;
+            _startPosY = y + 50;
             _pictureWidth = width;
             _pictureHeight = height;
         }

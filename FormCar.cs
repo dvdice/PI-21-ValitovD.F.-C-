@@ -5,7 +5,7 @@ namespace WindowsFormsCars
 {
     public partial class FormCar : Form
     {
-        private Excavator excavator;
+        private ITransport excavator;
         /// <summary>
         /// Конструктор
         /// </summary>
@@ -14,6 +14,15 @@ namespace WindowsFormsCars
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Передача машины на форму
+        /// </summary>
+        /// <param name="excavator"></param>
+        public void SetExcavator(ITransport excavator)
+        {
+            this.excavator = excavator;
+            Draw();
+        }
 
         /// <summary>
         /// Метод отрисовки машины
@@ -22,18 +31,20 @@ namespace WindowsFormsCars
         {
             Bitmap bmp = new Bitmap(pictureBoxCars.Width, pictureBoxCars.Height);
             Graphics gr = Graphics.FromImage(bmp);
-            excavator.DrawTransport(gr);
+            excavator?.DrawTransport(gr);
             pictureBoxCars.Image = bmp;
         }
- /// <summary>
- /// Обработка нажатия кнопки "Создать"
- /// </summary>
- /// <param name="sender"></param>
- /// <param name="e"></param>
- private void buttonCreate_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Обработка нажатия кнопки "Создать"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonCreate_Click(object sender, EventArgs e)
         {
             Random rnd = new Random();
-            excavator = new Excavator(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Yellow);
+            excavator = new Excavator(rnd.Next(100, 300), 
+                                      rnd.Next(1000, 2000),
+                                      Color.Yellow);
             excavator.SetPosition(rnd.Next(10, 100),
                                   rnd.Next(10, 100), 
                                   pictureBoxCars.Width,
@@ -53,16 +64,16 @@ namespace WindowsFormsCars
             {
                 case "buttonUp":
 
-                    excavator.MoveTransport(Direction.Up);
+                    excavator?.MoveTransport(Direction.Up);
                     break;
                 case "buttonDown":
-                    excavator.MoveTransport(Direction.Down);
+                    excavator?.MoveTransport(Direction.Down);
                     break;
                 case "buttonLeft":
-                    excavator.MoveTransport(Direction.Left);
+                    excavator?.MoveTransport(Direction.Left);
                     break;
                 case "buttonRight":
-                    excavator.MoveTransport(Direction.Right);
+                    excavator?.MoveTransport(Direction.Right);
                     break;
             }
             Draw();
