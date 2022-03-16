@@ -38,10 +38,12 @@ namespace WindowsFormsCars
                            rnd.Next(1000, 2000),
                            Color.Yellow,
                            Color.Blue,
-                           true,
-                           true);
+                           false,
+                           false);
             excavator.SetPosition(rnd.Next(10, 100),
-            rnd.Next(10, 100), pictureBoxCars.Width, pictureBoxCars.Height);
+                                  rnd.Next(10, 100),
+                                  pictureBoxCars.Width,
+                                  pictureBoxCars.Height);
             Draw();
         }
         /// <summary>

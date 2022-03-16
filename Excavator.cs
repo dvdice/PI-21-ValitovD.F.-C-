@@ -26,7 +26,7 @@ namespace WindowsFormsCars
         /// <summary>
         /// Ширина отрисовки автомобиля
         /// </summary>
-        private readonly int excavatorWidth = 100;
+        private readonly int excavatorWidth = 110;
         /// <summary>
         /// Высота отрисовки автомобиля
         /// </summary>
@@ -86,8 +86,8 @@ namespace WindowsFormsCars
         public void SetPosition(int x, int y, int width, int height)
         {
             // Продумать логику
-            _startPosX = width / 2 - excavatorWidth + x;
-            _startPosY = height / 2 + excavatorHeight / 2 + y;
+            _startPosX = x;
+            _startPosY = y + 100;
             _pictureWidth = width;
             _pictureHeight = height;
         }
@@ -102,16 +102,37 @@ namespace WindowsFormsCars
             {
                 // вправо
                 case Direction.Right:
-                    if (_startPosX + step < _pictureWidth - excavatorWidth - 205)
+                    if (BackBrush)
                     {
-                        _startPosX += step;
+                        if (_startPosX + step < _pictureWidth - excavatorWidth - 205)
+                        {
+                            _startPosX += step;
+                        }
                     }
+                    else
+                    {
+                        if (_startPosX + step < _pictureWidth - excavatorWidth - 150)
+                        {
+                            _startPosX += step;
+                        }
+                    }
+                    
                     break;
                 //влево
                 case Direction.Left:
-                    if (_startPosX > 2)
+                    if (FrontScoop)
                     {
-                        _startPosX -= step;
+                        if (_startPosX > 2)
+                        {
+                            _startPosX -= step;
+                        }
+                    }
+                    else
+                    {
+                        if (_startPosX > -100)
+                        {
+                            _startPosX -= step;
+                        }
                     }
                     break;
                 //вверх
