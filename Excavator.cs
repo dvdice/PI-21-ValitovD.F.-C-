@@ -56,7 +56,7 @@ namespace WindowsFormsCars
                     break;
                 //вверх
                 case Direction.Up:
-                    if (_startPosY > 100)
+                    if (_startPosY > 118)
                     {
                         _startPosY -= step;
                     }
@@ -79,7 +79,7 @@ namespace WindowsFormsCars
             Pen pen = new Pen(Color.Black);
             Brush blueBrush = new SolidBrush(Color.Blue);
             Brush grayBrush = new SolidBrush(Color.DarkGray);
-            Brush yellowBrush = new SolidBrush(Color.Yellow);
+            Brush yellowBrush = new SolidBrush(MainColor);
             Brush blackBrush = new SolidBrush(Color.Black);
             Brush greenBrush = new SolidBrush(Color.Green);
 
