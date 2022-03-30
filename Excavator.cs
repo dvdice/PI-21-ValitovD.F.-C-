@@ -79,13 +79,13 @@ namespace WindowsFormsCars
             Pen pen = new Pen(Color.Black);
             Brush blueBrush = new SolidBrush(Color.Blue);
             Brush grayBrush = new SolidBrush(Color.DarkGray);
-            Brush yellowBrush = new SolidBrush(Color.Yellow);
+            Brush mainBrush = new SolidBrush(MainColor);
             Brush blackBrush = new SolidBrush(Color.Black);
             Brush greenBrush = new SolidBrush(Color.Green);
 
             
             //кузов
-            g.FillRectangle(yellowBrush, _startPosX + 130, _startPosY - 65, 130, 30);
+            g.FillRectangle(mainBrush, _startPosX + 130, _startPosY - 65, 130, 30);
             //гусеницы
             g.FillEllipse(grayBrush, _startPosX + 115, _startPosY - 35, 60, 30);
             g.FillEllipse(grayBrush, _startPosX + 130, _startPosY - 35, 60, 30);

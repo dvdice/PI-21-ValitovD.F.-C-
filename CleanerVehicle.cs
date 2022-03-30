@@ -21,9 +21,9 @@ namespace WindowsFormsCars
         public override void DrawTransport(Graphics g)
         {
             Pen pen = new Pen(Color.Black);
-            Brush blueBrush = new SolidBrush(Color.Blue);
+            Brush dopBrush = new SolidBrush(DopColor);
             Brush grayBrush = new SolidBrush(Color.DarkGray);
-            Brush yellowBrush = new SolidBrush(Color.Yellow);
+            Brush mainBrush = new SolidBrush(MainColor);
             Brush blackBrush = new SolidBrush(Color.Black);
             Brush greenBrush = new SolidBrush(Color.Green);
             // передний ковш 
@@ -39,7 +39,7 @@ namespace WindowsFormsCars
                 g.DrawLine(pen, _startPosX + 94, _startPosY - 25, _startPosX + 130, _startPosY - 40);
             }
             //кузов
-            g.FillRectangle(yellowBrush, _startPosX + 130, _startPosY - 65, 130, 30);
+            g.FillRectangle(mainBrush, _startPosX + 130, _startPosY - 65, 130, 30);
             //гусеницы
             g.FillEllipse(grayBrush, _startPosX + 115, _startPosY - 35, 60, 30);
             g.FillEllipse(grayBrush, _startPosX + 130, _startPosY - 35, 60, 30);
@@ -58,7 +58,7 @@ namespace WindowsFormsCars
             //труба
             g.FillRectangle(blackBrush, _startPosX + 160, _startPosY - 95, 10, 30);
             //кабина
-            g.FillRectangle(blueBrush, _startPosX + 217, _startPosY - 105, 40, 40);
+            g.FillRectangle(dopBrush, _startPosX + 217, _startPosY - 105, 40, 40);
             //щетка+крепеж
             if (BackBrush)
             {

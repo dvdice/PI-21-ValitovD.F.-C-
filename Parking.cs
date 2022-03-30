@@ -24,11 +24,11 @@ namespace WindowsFormsCars
         /// <summary>
         /// Размер парковочного места (ширина)
         /// </summary>
-        private readonly int _placeSizeWidth = 280;
+        private readonly int _placeSizeWidth = 320;//280
         /// <summary>
         /// Размер парковочного места (высота)
         /// </summary>
-        private readonly int _placeSizeHeight = 130;
+        private readonly int _placeSizeHeight = 130;//130
 
         protected readonly int excavatorWidth = 60;
         protected readonly int excavatorHeight = 60;
@@ -48,7 +48,10 @@ namespace WindowsFormsCars
             pictureWidth = picWidth;
             pictureHeight = picHeight;
         }
-
+        private bool CheckForFreePlace(int index)
+        {
+            return _places[index] == null;
+        }
         /// <summary>
         /// Перегрузка оператора сложения
         /// Логика действия: на парковку добавляется автомобиль
@@ -58,21 +61,14 @@ namespace WindowsFormsCars
         /// <returns></returns>
         public static int operator +(Parking<T> p, T excavator)
         {
-            int i = 0;
-            int j = 0;
-            while (i < p.height)
+            for (int i = 0; i < p._places.Length; i++)
             {
-                while (j < p.width)
+                if (p.CheckForFreePlace(i))
                 {
-                    if (p._places[i * p.width + j] == null)
-                    {
-                        excavator.SetPosition(50 + j * p._placeSizeWidth, 30 + i * p._placeSizeHeight, p.pictureWidth, p.pictureHeight);
-                        p._places[i * p.width + j] = excavator;
-                        return (i * p.width + j);
-                    }
-                    j++;
+                    p._places[i] = excavator;
+                    p._places[i].SetPosition(135 + i % 2 * p._placeSizeWidth, i / 2 * p._placeSizeHeight + 75, p.pictureWidth, p.pictureHeight);
+                    return i;
                 }
-                i++;
             }
             return -1;
         }
@@ -85,16 +81,17 @@ namespace WindowsFormsCars
         /// <returns></returns>
         public static T operator -(Parking<T> p, int index)
         {
-            if (index > -1 && index < p._places.Length && p._places[index] != null)
-            {
-                T excavator = p._places[index];
-                p._places[index] = null;
-                return excavator;
-            }
-            else
+            if (index < 0 || index > p._places.Length)
             {
                 return null;
             }
+            if (!p.CheckForFreePlace(index))
+            {
+                T car = p._places[index];
+                p._places[index] = null;
+                return car;
+            }
+            return null;
         }
         /// <summary>
         /// Метод отрисовки парковки
