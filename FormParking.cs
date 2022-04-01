@@ -13,39 +13,73 @@ namespace WindowsFormsCars
     public partial class FormParking : Form
     {
         /// <summary>
-        /// Объект от класса-парковки
+        /// Объект от класса-коллекции парковок
         /// </summary>
-        private readonly Parking<Excavator> parking;
+        private readonly ParkingCollection parkingCollection;
         public FormParking()
         {
             InitializeComponent();
-            parking = new Parking<Excavator>(pictureBoxParking.Width,
+            parkingCollection = new ParkingCollection(pictureBoxParking.Width,
             pictureBoxParking.Height);
-            Draw();
-
         }
+
         private void Draw()
         {
-            Bitmap bmp = new Bitmap(pictureBoxParking.Width, pictureBoxParking.Height);
-            Graphics gr = Graphics.FromImage(bmp);
-            parking.Draw(gr);
-            pictureBoxParking.Image = bmp;
+            if (listBoxParkings.SelectedIndex > -1)
+            {   //если выбран один из пуктов в listBox (при старте программы ни один пункт 
+                //не будет выбран и может возникнуть ошибка, если мы попытаемся обратиться
+                //к элементу  listBox)
+                Bitmap bmp = new Bitmap(pictureBoxParking.Width,
+                pictureBoxParking.Height);
+                Graphics gr = Graphics.FromImage(bmp);
+                parkingCollection[listBoxParkings.SelectedItem.ToString()].Draw(gr);
+                pictureBoxParking.Image = bmp;
+            }
+
+        }
+
+        /// <summary>
+        /// Заполнение listBoxLevels
+        /// </summary>
+        private void ReloadLevels()
+        {
+            int index = listBoxParkings.SelectedIndex;
+            listBoxParkings.Items.Clear();
+            for (int i = 0; i < parkingCollection.Keys.Count; i++)
+            {
+                listBoxParkings.Items.Add(parkingCollection.Keys[i]);
+            }
+            if (listBoxParkings.Items.Count > 0 && (index == -1 || index >=
+           listBoxParkings.Items.Count))
+            {
+                listBoxParkings.SelectedIndex = 0;
+            }
+            else if (listBoxParkings.Items.Count > 0 && index > -1 && index <
+           listBoxParkings.Items.Count)
+            {
+                listBoxParkings.SelectedIndex = index;
+            }
         }
 
 
         private void parkExcavatorBtn_Click(object sender, EventArgs e)
         {
             ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (listBoxParkings.SelectedIndex > -1)
             {
-                var excavator = new Excavator(100, 1000, dialog.Color);
-            if (parking + excavator != -1)
+
+                if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    Draw();
-                }
-                else
-                {
-                    MessageBox.Show("Парковка переполнена");
+                    var excavator = new Excavator(100, 1000, dialog.Color);
+                    if (parkingCollection[listBoxParkings.SelectedItem.ToString()] +
+                   excavator)
+                    {
+                        Draw();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Парковка переполнена");
+                    }
                 }
             }
         }
@@ -58,11 +92,9 @@ namespace WindowsFormsCars
                 ColorDialog dialogDop = new ColorDialog();
                 if (dialogDop.ShowDialog() == DialogResult.OK)
                 {
-                    var cleanerVehicle = new CleanerVehicle
-                        (
-                        100, 1000, dialog.Color, dialogDop.Color, true, true
-                        );
-                    if (parking + cleanerVehicle != -1)
+                    var excavator = new CleanerVehicle(100, 1000, dialog.Color, dialogDop.Color,
+                   true, true);
+                    if (parkingCollection[listBoxParkings.SelectedItem.ToString()] + excavator)
                     {
                         Draw();
                     }
@@ -73,12 +105,12 @@ namespace WindowsFormsCars
                 }
             }
         }
-
         private void takeCarBtn_Click(object sender, EventArgs e)
         {
-            if (maskedTextBox1.Text != "")
+            if (listBoxParkings.SelectedIndex > -1 && maskedTextBox1.Text != "")
             {
-                var excavator = parking - Convert.ToInt32(maskedTextBox1.Text);
+                var excavator = parkingCollection[listBoxParkings.SelectedItem.ToString()] -
+                Convert.ToInt32(maskedTextBox1.Text);
                 if (excavator != null)
                 {
                     FormCar form = new FormCar();
@@ -88,6 +120,54 @@ namespace WindowsFormsCars
                 Draw();
             }
 
+        }
+
+        /// <summary>
+        /// Обработка нажатия кнопки "Добавить парковку"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void addParkingBtn_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBoxParkings.Text))
+            {
+                MessageBox.Show("Введите название парковки", "Ошибка",
+               MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            parkingCollection.AddParking(textBoxParkings.Text);
+            ReloadLevels();
+        }
+
+        
+       
+
+        /// <summary>
+        /// Обработка нажатия кнопки "Удалить парковку" 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void deleteParkingBtn_Click_1(object sender, EventArgs e)
+        {
+            if (listBoxParkings.SelectedIndex > -1)
+            {
+                if (MessageBox.Show($"Удалить парковку { listBoxParkings.SelectedItem.ToString()}?", "Удаление", MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    parkingCollection.DelParking(listBoxParkings.SelectedItem.ToString());
+                    ReloadLevels();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Метод обработки выбора элемента на listBoxLevels
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listBoxParkings_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            Draw();
         }
     }
 }

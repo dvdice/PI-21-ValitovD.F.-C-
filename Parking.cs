@@ -12,7 +12,11 @@ namespace WindowsFormsCars
         /// <summary>
         /// Массив объектов, которые храним
         /// </summary>
-         private readonly T[] _places;
+        private readonly List<T> _places;
+        /// <summary>
+        /// Максимальное количество мест на парковке
+        /// </summary>
+        private readonly int _maxCount;
         /// <summary>
         /// Ширина окна отрисовки
         /// </summary>
@@ -44,7 +48,8 @@ namespace WindowsFormsCars
         {
             width = picWidth / _placeSizeWidth;
             height = picHeight / _placeSizeHeight;
-            _places = new T[width * height];
+            _maxCount = width * height;
+            _places = new List<T>();
             pictureWidth = picWidth;
             pictureHeight = picHeight;
         }
@@ -59,18 +64,17 @@ namespace WindowsFormsCars
         /// <param name="p">Парковка</param>
         /// <param name="car">Добавляемый автомобиль</param>
         /// <returns></returns>
-        public static int operator +(Parking<T> p, T excavator)
+        public static bool operator +(Parking<T> p, T excavator)
         {
-            for (int i = 0; i < p._places.Length; i++)
+            if (p._places.Count >= p._maxCount)
             {
-                if (p.CheckForFreePlace(i))
-                {
-                    p._places[i] = excavator;
-                    p._places[i].SetPosition(135 + i % 2 * p._placeSizeWidth, i / 2 * p._placeSizeHeight + 75, p.pictureWidth, p.pictureHeight);
-                    return i;
-                }
+                return false;
             }
-            return -1;
+            else
+            {
+                p._places.Add(excavator);
+                return true;
+            }
         }
         /// <summary>
         /// Перегрузка оператора вычитания
@@ -81,17 +85,16 @@ namespace WindowsFormsCars
         /// <returns></returns>
         public static T operator -(Parking<T> p, int index)
         {
-            if (index < 0 || index > p._places.Length)
+            if (index < -1 || index > p._places.Count)
             {
                 return null;
             }
-            if (!p.CheckForFreePlace(index))
+            else
             {
-                T car = p._places[index];
-                p._places[index] = null;
-                return car;
+                T delete = p._places[index];
+                p._places.RemoveAt(index);
+                return delete;
             }
-            return null;
         }
         /// <summary>
         /// Метод отрисовки парковки
@@ -100,9 +103,10 @@ namespace WindowsFormsCars
         public void Draw(Graphics g)
         {
             DrawMarking(g);
-            for (int i = 0; i < _places.Length; i++)
+            for (int i = 0; i < _places.Count; i++)
             {
-                _places[i]?.DrawTransport(g);
+                _places[i].SetPosition(135 + i % 2 * _placeSizeWidth, i / 2 * _placeSizeHeight + 75, pictureWidth, pictureHeight);
+                _places[i].DrawTransport(g);
             }
         }
         /// <summary>
