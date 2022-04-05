@@ -139,9 +139,6 @@ namespace WindowsFormsCars
             ReloadLevels();
         }
 
-        
-       
-
         /// <summary>
         /// Обработка нажатия кнопки "Удалить парковку" 
         /// </summary>
@@ -168,6 +165,32 @@ namespace WindowsFormsCars
         private void listBoxParkings_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             Draw();
+        }
+
+        /// <summary>
+        /// Метод добавления машины
+        /// </summary>
+        /// <param name="car"></param>
+        private void AddVehicle(Vehicle car)
+        {
+            if (car != null && listBoxParkings.SelectedIndex > -1)
+            {
+                if ((parkingCollection[listBoxParkings.SelectedItem.ToString()]) + car)
+                {
+                    Draw();
+                }
+                else
+                {
+                    MessageBox.Show("Машину не удалось поставить");
+                }
+            }
+        }
+
+        private void addVehicleBtn_Click_1(object sender, EventArgs e)
+        {
+            var formCarConfig = new FormCarConfig();
+            formCarConfig.AddEvent(AddVehicle);
+            formCarConfig.Show();
         }
     }
 }

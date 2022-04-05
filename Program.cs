@@ -9,6 +9,7 @@ namespace TPLab1
 {
     static class Program
     {
+        public delegate void CarDelegate(Vehicle car);
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>

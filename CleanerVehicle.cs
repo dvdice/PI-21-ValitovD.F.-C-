@@ -8,7 +8,7 @@ namespace WindowsFormsCars
     {
         public Color DopColor { private set; get; }
         public bool FrontScoop { private set; get; }
-        public bool BackBrush { private set; get;    }
+        public bool BackBrush { private set; get; }
 
         public CleanerVehicle(int maxSpeed, float weight, Color mainColor, Color dopColor, bool frontScoop, bool backBrush) :
             base(maxSpeed, weight, mainColor, 100, 60)
@@ -67,6 +67,23 @@ namespace WindowsFormsCars
                 g.FillEllipse(greenBrush, _startPosX + 287, _startPosY - 30, 25, 25);
             }
         }
+        /// <summary>
+        /// Смена дополнительного цвета
+        /// </summary>
+        /// <param name="color"></param>
+        public void SetDopColor(Color color)
+        {
+            DopColor = color;
+        }
 
+        public void SetBackBrush(bool b)
+        {
+            BackBrush = b;
+        }
+
+        public void SetFrontScoop(bool b)
+        {
+            FrontScoop = b;
+        }
     }
 }
