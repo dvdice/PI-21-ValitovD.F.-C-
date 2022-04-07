@@ -17,6 +17,23 @@ namespace WindowsFormsCars
             FrontScoop = frontScoop;
             BackBrush = backBrush;
         }
+        /// <summary>
+        /// Конструктор для загрузки с файла
+        /// </summary>
+        /// <param name="info"></param>
+        public CleanerVehicle(string info) : base(info)
+        {
+            string[] strs = info.Split(separator);
+            if (strs.Length == 6)
+            {
+                MaxSpeed = Convert.ToInt32(strs[0]);
+                Weight = Convert.ToInt32(strs[1]);
+                MainColor = Color.FromName(strs[2]);
+                DopColor = Color.FromName(strs[3]);
+                BackBrush = Convert.ToBoolean(strs[4]);
+                FrontScoop = Convert.ToBoolean(strs[5]);
+            }
+        }
 
         public override void DrawTransport(Graphics g)
         {
@@ -84,6 +101,11 @@ namespace WindowsFormsCars
         public void SetFrontScoop(bool b)
         {
             FrontScoop = b;
+        }
+        public override string ToString()
+        {
+            return
+                $"{base.ToString()}{separator}{DopColor.Name}{separator}{FrontScoop}{separator}{BackBrush}{separator}";
         }
     }
 }

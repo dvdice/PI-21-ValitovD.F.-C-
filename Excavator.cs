@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace WindowsFormsCars
 {
@@ -15,6 +16,11 @@ namespace WindowsFormsCars
         /// Высота отрисовки автомобиля
         /// </summary>
         private readonly int excavatorHeight = 60;
+        /// <summary>
+        /// Разделитель для записи информации по объекту в файл
+        /// </summary>
+        protected readonly char separator = ';';
+
 
         protected Excavator(int maxSpeed, float weight, Color mainColor, int excavatorWidth, int excavatorHeight)
         {
@@ -29,6 +35,20 @@ namespace WindowsFormsCars
             MaxSpeed = maxSpeed;
             Weight = weight;
             MainColor = mainColor;
+        }
+        /// <summary>
+        /// Конструктор для загрузки с файла
+        /// </summary>
+        /// <param name="info">Информация по объекту</param>
+        public Excavator(string info)
+        {
+            string[] strs = info.Split(separator);
+            if (strs.Length == 3)
+            {
+                MaxSpeed = Convert.ToInt32(strs[0]);
+                Weight = Convert.ToInt32(strs[1]);
+                MainColor = Color.FromName(strs[2]);
+            }
         }
 
         /// <summary>
@@ -106,7 +126,10 @@ namespace WindowsFormsCars
             //кабина
             g.FillRectangle(blueBrush, _startPosX + 217, _startPosY - 105, 40, 40);
             //щетка+крепеж
-            
+        }
+        public override string ToString()
+        {
+            return $"{MaxSpeed}{separator}{Weight}{separator}{MainColor.Name}";
         }
     }
 }
