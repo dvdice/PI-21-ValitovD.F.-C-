@@ -189,7 +189,7 @@ namespace WindowsFormsCars
             // 
             // saveFileDialog
             // 
-            this.saveFileDialog.Filter = "\"txt file | *.txt\"";
+            this.saveFileDialog.Filter = "\"Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*\"";
             // 
             // openFileDialog
             // 

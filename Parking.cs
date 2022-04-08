@@ -68,13 +68,10 @@ namespace WindowsFormsCars
         {
             if (p._places.Count >= p._maxCount)
             {
-                return false;
+                throw new ParkingOverflowException();
             }
-            else
-            {
                 p._places.Add(excavator);
                 return true;
-            }
         }
         /// <summary>
         /// Перегрузка оператора вычитания
@@ -87,14 +84,11 @@ namespace WindowsFormsCars
         {
             if (index < -1 || index > p._places.Count)
             {
-                return null;
+                throw new ParkingNotFoundException(index);
             }
-            else
-            {
                 T delete = p._places[index];
                 p._places.RemoveAt(index);
                 return delete;
-            }
         }
         /// <summary>
         /// Метод отрисовки парковки

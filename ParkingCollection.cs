@@ -85,7 +85,7 @@ namespace WindowsFormsCars
         /// </summary>
         /// <param name="filename">Путь и имя файла</param>
         /// <returns></returns>
-        public bool SaveData(string filename)
+        public void SaveData(string filename)
         {
             if (File.Exists(filename))
             {
@@ -125,19 +125,18 @@ namespace WindowsFormsCars
                         }
                     }
                 }
-            }
-            return true;
+            } 
         }
         /// <summary>
         /// Загрузка нформации по автомобилям на парковках из файла
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public bool LoadData(string filename)
+        public void LoadData(string filename)
         {
             if (!File.Exists(filename))
             {
-                return false;
+                throw new FileNotFoundException();
             }
             using (StreamReader fs = new StreamReader(filename, Encoding.UTF8))
             {
@@ -151,7 +150,7 @@ namespace WindowsFormsCars
                 else
                 {
                     //если нет такой записи, то не те данные
-                    return false;
+                    throw new Exception("Неверный формат файла");
                 }
                 while ((data = fs.ReadLine()) != null)
                 {
@@ -176,14 +175,12 @@ namespace WindowsFormsCars
                     {
                         excavator = new CleanerVehicle(data.Split(separator)[1]);
                     }
-                    var result = parkingStages[key] + excavator;
-                    if (!result)
+                    if (!(parkingStages[key] + excavator))
                     {
-                        return false;
+                        throw new Exception("Не удалось загрузить автомобиль на парковку"); 
                     }
                 }
             }
-            return true;
         }
     }
 }
