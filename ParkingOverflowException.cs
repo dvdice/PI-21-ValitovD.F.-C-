@@ -11,7 +11,7 @@ namespace WindowsFormsCars
     /// </summary>
     public class ParkingOverflowException : Exception
     {
-        public ParkingOverflowException() : base("Место занято")
+        public ParkingOverflowException() : base("Парковка переполнена")
 
         { }
     }

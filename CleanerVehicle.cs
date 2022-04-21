@@ -17,6 +17,7 @@ namespace WindowsFormsCars
             FrontScoop = frontScoop;
             BackBrush = backBrush;
         }
+
         /// <summary>
         /// Конструктор для загрузки с файла
         /// </summary>
@@ -56,7 +57,7 @@ namespace WindowsFormsCars
                 g.DrawLine(pen, _startPosX + 94, _startPosY - 25, _startPosX + 130, _startPosY - 40);
             }
             //кузов
-            g.FillRectangle(mainBrush, _startPosX + 130, _startPosY - 65, 130, 30);
+            g.FillRectangle(mainBrush, _startPosX + 131, _startPosY - 65, 130, 30);
             //гусеницы
             g.FillEllipse(grayBrush, _startPosX + 115, _startPosY - 35, 60, 30);
             g.FillEllipse(grayBrush, _startPosX + 130, _startPosY - 35, 60, 30);

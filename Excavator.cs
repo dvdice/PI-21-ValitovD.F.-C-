@@ -125,7 +125,6 @@ namespace WindowsFormsCars
             g.FillRectangle(blackBrush, _startPosX + 160, _startPosY - 95, 10, 30);
             //кабина
             g.FillRectangle(blueBrush, _startPosX + 217, _startPosY - 105, 40, 40);
-            //щетка+крепеж
         }
         public override string ToString()
         {

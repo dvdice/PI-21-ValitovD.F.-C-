@@ -216,7 +216,7 @@ MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     MessageBox.Show(ex.Message, "Переполнение", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-                    logger.Warn($"Парковка переполнена. Нет мест");
+                    logger.Info($"Парковка переполнена. Нет мест");
                 }
                 catch (Exception ex)
                 {
@@ -243,7 +243,7 @@ MessageBoxIcon.Question) == DialogResult.Yes)
                     parkingCollection.SaveData(saveFileDialog.FileName);
                     MessageBox.Show("Сохранение прошло успешно", "Результат",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    logger.Warn("Сохранено в файл " + saveFileDialog.FileName);
+                    logger.Info("Сохранено в файл " + saveFileDialog.FileName);
                 }
                 catch (Exception ex)
                 {
@@ -274,7 +274,7 @@ MessageBoxIcon.Question) == DialogResult.Yes)
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Неизвестная ошибка при сохранении",
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка при загрузке",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
