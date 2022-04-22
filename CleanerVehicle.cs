@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace WindowsFormsCars
 {
-    public class CleanerVehicle : Excavator
+    public class CleanerVehicle : Excavator, IEquatable<CleanerVehicle>
     {
         public Color DopColor { private set; get; }
         public bool FrontScoop { private set; get; }
@@ -107,6 +107,56 @@ namespace WindowsFormsCars
         {
             return
                 $"{base.ToString()}{separator}{DopColor.Name}{separator}{FrontScoop}{separator}{BackBrush}{separator}";
+        }
+        /// <summary>
+        /// Метод интерфейса IEquatable для класса SportCar
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals(CleanerVehicle other)
+        {
+            var res = (this as Excavator).Equals(other as Excavator);
+            if (!res)
+            {
+                return res;
+            }
+            if (other == null)
+            {
+                return false;
+            }
+            if (DopColor != other.DopColor)
+            {
+                return false;
+            }
+            if (FrontScoop != other.FrontScoop)
+            {
+                return false;
+            }
+            if (BackBrush != other.BackBrush)
+            {
+                return false;
+            }
+            return true;
+        }
+        /// <summary>
+        /// Перегрузка метода от object
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(Object obj)
+        {
+            if (obj == null)
+            {
+            return false;
+            }
+            if (!(obj is CleanerVehicle cleanerObj))
+            {
+                return false;
+            }
+            else
+            {
+                return Equals(cleanerObj);
+            }
         }
     }
 }

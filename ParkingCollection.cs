@@ -98,9 +98,7 @@ namespace WindowsFormsCars
                 {
                     //Начинаем парковку
                     fs.WriteLine($"Parking{separator}{level.Key}");
-                    ITransport excavator = null;
-
-                    for (int i = 0; (excavator = level.Value.GetNext(i)) != null; i++)
+                    foreach (ITransport excavator in level.Value)
                     {
                         if (excavator != null)
                         {
@@ -127,6 +125,7 @@ namespace WindowsFormsCars
                 }
             } 
         }
+
         /// <summary>
         /// Загрузка нформации по автомобилям на парковках из файла
         /// </summary>

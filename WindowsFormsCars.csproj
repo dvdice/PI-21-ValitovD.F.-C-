@@ -54,9 +54,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ParkingAlreadyHaveException.cs" />
     <Compile Include="CleanerVehicle.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="Excavator.cs" />
+    <Compile Include="ExcavatorComparer.cs" />
     <Compile Include="FormCar.cs">
       <SubType>Form</SubType>
     </Compile>
